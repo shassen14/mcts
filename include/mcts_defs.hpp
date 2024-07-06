@@ -26,7 +26,7 @@ struct Node
    * @param num_actions Number of actions evaluated at current timestep
    * @param parent Node pointer which nullptr is the default value
    */
-  Node(const int num_states, const int num_actions, Node* parent = nullptr)
+  Node(const int num_states, const int num_actions, std::shared_ptr<Node> parent = nullptr)
       : Num_states(num_states), Num_actions(num_actions), Parent(std::move(parent))
   {
     States.resize(num_states, 1);
@@ -36,10 +36,7 @@ struct Node
   /**
    * @brief Destructor
    */
-  ~Node()
-  {
-    delete Parent;
-  };
+  ~Node() = default;
 
   /**
    * @brief Number of visits this node received
@@ -72,14 +69,18 @@ struct Node
   Eigen::Matrix<double, Eigen::Dynamic, 1> Actions;
 
   /**
-   * @brief Raw pointer to the parent node since no ownership is happening, just observation
+   * @brief Shared pointer to the parent node
+   * @details Design choice for smart pointer is not needing to manually delete
+   * a raw pointer.
+   * @details NOTE: need to look into weak_ptr, It might be better in this case
+   * because the children shouldn't really own the parent
    */
-  Node* Parent;
+  std::shared_ptr<Node> Parent;
 
   /**
    * @brief Vector of unique ptrs to children since there should be one owner
    */
-  std::vector<std::unique_ptr<Node>> Children;
+  std::vector<std::shared_ptr<Node>> Children;
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -97,7 +98,7 @@ struct Node_t
   /**
    * @brief Constructor
    */
-  Node_t() = default;
+  Node_t(Node_t* parent = nullptr) : Parent(std::move(parent)){};
 
   /**
    * @brief Destructor
