@@ -1,1 +1,14 @@
-# add_subdirectory(mcts)
+project(tests)
+
+# Obtain all headers and sources in tests directory
+file(GLOB_RECURSE glob_headers [a-z]*.hpp)
+file(GLOB_RECURSE glob_sources [a-z]*.cpp)
+set(headers ${headers} ${glob_headers})
+set(sources ${sources} ${glob_sources})
+
+# create executable where it automatically includes all the individual test files
+add_executable(all_tests all_tests.cpp ${headers} ${sources})
+target_include_directories(all_tests PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_link_libraries(all_tests
+                      ${GTEST_LIBRARIES}
+                      mcts)
