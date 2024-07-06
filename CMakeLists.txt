@@ -1,8 +1,7 @@
 cmake_minimum_required(VERSION 3.7)
 project(mcts
         VERSION 0.1.0
-        DESCRIPTION "Just starting...
-                     Monte Carlo Tree Search")
+        DESCRIPTION "Just starting... Monte Carlo Tree Search")
 
 
 set(CMAKE_CXX_STANDARD 20)
