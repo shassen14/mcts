@@ -12,3 +12,6 @@ target_include_directories(all_tests PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 target_link_libraries(all_tests
                       ${GTEST_LIBRARIES}
                       mcts)
+
+# valgrind.bash file move over to utilize to check for memory leaks
+configure_file(valgrind.bash valgrind.bash COPYONLY)
