@@ -26,11 +26,11 @@ struct Node
    * @param num_actions Number of actions evaluated at current timestep
    * @param parent Node pointer which nullptr is the default value
    */
-  Node(const int num_states, const int num_actions, std::shared_ptr<Node> parent = nullptr)
+  Node(const int num_states, const int num_actions, Node* parent = nullptr)
       : Num_states(num_states), Num_actions(num_actions), Parent(std::move(parent))
   {
-    States.resize(num_states, 1);
-    Actions.resize(num_actions, 1);
+    States.setZero(num_states);
+    Actions.setZero(num_actions);
   };
 
   /**
@@ -75,7 +75,7 @@ struct Node
    * @details NOTE: need to look into weak_ptr, It might be better in this case
    * because the children shouldn't really own the parent
    */
-  std::shared_ptr<Node> Parent;
+  Node* Parent;
 
   /**
    * @brief Vector of unique ptrs to children since there should be one owner
