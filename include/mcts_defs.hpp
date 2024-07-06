@@ -21,7 +21,7 @@ template <class Type = double>
 struct Node
 {
   /**
-   * @brief Constructor to initialize the state and action size
+   * @brief Constructor to initialize the state and action as zero vectors
    * @param num_states Number of states evaluated at current timestep
    * @param num_actions Number of actions evaluated at current timestep
    * @param parent Node pointer which nullptr is the default value
