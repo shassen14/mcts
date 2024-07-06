@@ -1,17 +1,6 @@
 #include <gtest/gtest.h>
 #include <mcts_defs.hpp>
-#include <random>
-
-///////////////////////////////////////////////////////////////////////////////
-// Helper function TODO: probably need to be in a test utils namespace, safer, and generalize
-///////////////////////////////////////////////////////////////////////////////
-int random_int(const int floor, const int ceiling)
-{
-  std::random_device dev;
-  std::mt19937 rng(dev());
-  std::uniform_int_distribution<std::mt19937::result_type> random_int(floor, ceiling);
-  return random_int(rng);
-}
+#include <test_utils.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -20,8 +9,8 @@ TEST(MCTSDefs, Node)
   // Initalize helper variables for calculations
   const int floor = 0;
   const int ceiling = 20;
-  const int states = random_int(floor, ceiling);
-  const int actions = random_int(floor, ceiling);
+  const int states = Test_utils::Random_int(floor, ceiling);
+  const int actions = Test_utils::Random_int(floor, ceiling);
   Mcts_defs::Node<>* root = new Mcts_defs::Node<>(states, actions);
   const int total_children = 10;
 
