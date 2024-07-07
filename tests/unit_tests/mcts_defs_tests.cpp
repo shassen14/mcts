@@ -16,7 +16,8 @@ TEST(MCTSDefs, Node)
 
   for (int i = 0; i < total_children; ++i)
   {
-    std::unique_ptr<Mcts_defs::Node<>> child = std::make_unique<Mcts_defs::Node<>>(i, i + 1, root);
+    // std::unique_ptr<Mcts_defs::Node<>>
+    auto child = std::make_unique<Mcts_defs::Node<>>(i, i + 1, root);
     root->Children.push_back(std::move(child));
   }
 
@@ -58,8 +59,8 @@ TEST(MCTSDefs, Node_t)
 
   for (int i = 0; i < total_children; ++i)
   {
-    std::unique_ptr<Mcts_defs::Node_t<states, actions>> child =
-        std::make_unique<Mcts_defs::Node_t<states, actions>>(root);
+    // std::unique_ptr<Mcts_defs::Node_t<states, actions>>
+    auto child = std::make_unique<Mcts_defs::Node_t<states, actions>>(root);
     root->Children.push_back(std::move(child));
   }
 
