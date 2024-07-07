@@ -1,7 +1,6 @@
 #ifndef TEST_UTILS_HPP
 #define TEST_UTILS_HPP
 
-#include <iostream>
 #include <random>
 #include <type_traits>
 
