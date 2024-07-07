@@ -9,4 +9,4 @@ valgrind --leak-check=full \
          --track-origins=yes \
          --verbose \
          --log-file=${LOG_FILE} \
-         ${SCRIPT_DIR}/all_tests
+         ${SCRIPT_DIR}/tests
