@@ -26,7 +26,7 @@ struct Node
    * @param num_actions Number of actions evaluated at current timestep
    * @param parent Node shared pointer which nullptr is the default value
    */
-  Node(const int num_states, const int num_actions, std::shared_ptr<Node> parent = nullptr)
+  Node(const int num_states, const int num_actions, const std::shared_ptr<Node> parent = nullptr)
       : Num_states(num_states), Num_actions(num_actions), Parent(parent)
   {
     States.setZero(num_states);
@@ -96,7 +96,7 @@ struct Node_t
   /**
    * @brief Constructor
    */
-  Node_t(std::shared_ptr<Node_t> parent = nullptr) : Parent(parent){};
+  Node_t(const std::shared_ptr<Node_t> parent = nullptr) : Parent(parent){};
 
   /**
    * @brief Destructor
