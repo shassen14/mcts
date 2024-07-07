@@ -7,9 +7,9 @@ set(headers ${headers} ${glob_headers})
 set(sources ${sources} ${glob_sources})
 
 # create executable where it automatically includes all the individual test files
-add_executable(all_tests all_tests.cpp ${headers} ${sources})
-target_include_directories(all_tests PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
-target_link_libraries(all_tests
+add_executable(${PROJECT_NAME} ${headers} ${sources})
+target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_link_libraries(${PROJECT_NAME}
                       ${GTEST_LIBRARIES}
                       mcts)
 
