@@ -13,6 +13,5 @@ fi
 
 # Make and build the project
 make_build_dir
-cd ${BUILD_DIR}
-cmake ${SCRIPT_DIR}
-make
+cmake -B ${BUILD_DIR} ${SCRIPT_DIR}
+cmake --build ${BUILD_DIR}
