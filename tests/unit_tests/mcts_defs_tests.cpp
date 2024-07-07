@@ -9,9 +9,9 @@ TEST(MCTSDefs, Node)
   // Initalize helper variables for calculations
   const int floor = 0;
   const int ceiling = 20;
-  const int states = Test_utils::Random_int(floor, ceiling);
-  const int actions = Test_utils::Random_int(floor, ceiling);
-  const int total_children = Test_utils::Random_int(floor, ceiling);
+  const int states = Test_utils::Random_number<int>(floor, ceiling);
+  const int actions = Test_utils::Random_number<int>(floor, ceiling);
+  const int total_children = Test_utils::Random_number<int>(floor, ceiling);
   auto root = std::make_shared<Mcts_defs::Node<>>(states, actions);
 
   for (int i = 0; i < total_children; ++i)
