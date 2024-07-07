@@ -24,10 +24,10 @@ struct Node
    * @brief Constructor to initialize the state and action as zero vectors
    * @param num_states Number of states evaluated at current timestep
    * @param num_actions Number of actions evaluated at current timestep
-   * @param parent Node pointer which nullptr is the default value
+   * @param parent Node shared pointer which nullptr is the default value
    */
-  Node(const int num_states, const int num_actions, Node* parent = nullptr)
-      : Num_states(num_states), Num_actions(num_actions), Parent(std::move(parent))
+  Node(const int num_states, const int num_actions, std::shared_ptr<Node> parent = nullptr)
+      : Num_states(num_states), Num_actions(num_actions), Parent(parent)
   {
     States.setZero(num_states);
     Actions.setZero(num_actions);
@@ -69,13 +69,11 @@ struct Node
   Eigen::Matrix<double, Eigen::Dynamic, 1> Actions;
 
   /**
-   * @brief Shared pointer to the parent node
+   * @brief Opted out for a weak_ptr to ensure for a more memory safe application
    * @details Design choice for smart pointer is not needing to manually delete
    * a raw pointer.
-   * @details NOTE: need to look into weak_ptr, It might be better in this case
-   * because the children shouldn't really own the parent
    */
-  Node* Parent;
+  std::weak_ptr<Node> Parent;
 
   /**
    * @brief Vector of unique ptrs to children since there should be one owner
@@ -98,7 +96,7 @@ struct Node_t
   /**
    * @brief Constructor
    */
-  Node_t(Node_t* parent = nullptr) : Parent(std::move(parent)){};
+  Node_t(std::shared_ptr<Node_t> parent = nullptr) : Parent(parent){};
 
   /**
    * @brief Destructor
@@ -136,9 +134,11 @@ struct Node_t
   Eigen::Matrix<double, M, 1> Actions;
 
   /**
-   * @brief Raw pointer to the parent node since no ownership is happening, just observation
+   * @brief Opted out for a weak_ptr to ensure for a more memory safe application
+   * @details Design choice for smart pointer is not needing to manually delete
+   * a raw pointer.
    */
-  Node_t* Parent;
+  std::weak_ptr<Node_t> Parent;
 
   /**
    * @brief Vector of unique ptrs to children since there should be one owner
