@@ -11,8 +11,8 @@ TEST(MCTSDefs, Node)
   const int ceiling = 20;
   const int states = Test_utils::Random_int(floor, ceiling);
   const int actions = Test_utils::Random_int(floor, ceiling);
+  const int total_children = Test_utils::Random_int(floor, ceiling);
   Mcts_defs::Node<>* root = new Mcts_defs::Node<>(states, actions);
-  const int total_children = 10;
 
   for (int i = 0; i < total_children; ++i)
   {
