@@ -14,8 +14,7 @@ TEST(TestUtils, RandomNumberInt)
 
   // tests for if the value is in between floor and ceiling,
   // also if it's an integer
-  EXPECT_LT(number, ceiling);
-  EXPECT_GT(number, floor);
+  EXPECT_TRUE(number <= ceiling && number > floor);
   EXPECT_TRUE(is_int(number));
 }
 
@@ -33,8 +32,7 @@ TEST(TestUtils, RandomNumberDouble)
 
   // tests for if the value is in between floor and ceiling,
   // also if it's NOT an integer
-  EXPECT_LT(number, ceiling);
-  EXPECT_GT(number, floor);
+  EXPECT_TRUE(number <= ceiling && number > floor);
   EXPECT_FALSE(is_int(number));
 }
 
