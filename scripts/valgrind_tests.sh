@@ -15,4 +15,4 @@ valgrind --leak-check=full \
          --track-origins=yes \
          --verbose \
          --log-file=${LOG_FILE} \
-         ${BUILD_DIR}/tests
+         ${BUILD_DIR}/tests/tests
