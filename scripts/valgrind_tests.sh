@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 
-# Assuming this file will be in the tests directory to run tests
+# Source the general variables needed for directory paths
 SCRIPT_DIR=$(realpath $(dirname $0))
+source ${SCRIPT_DIR}/variables.sh
+
 LOG_FILE=valgrind-out.txt
 
 valgrind --leak-check=full \
@@ -9,4 +11,4 @@ valgrind --leak-check=full \
          --track-origins=yes \
          --verbose \
          --log-file=${LOG_FILE} \
-         ${SCRIPT_DIR}/tests
+         ${BUILD_DIR}/tests/tests

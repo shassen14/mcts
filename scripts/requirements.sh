@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# TODO: work with macos/windows as well
+
 # Update
 sudo apt update
 
