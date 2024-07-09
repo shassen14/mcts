@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 SCRIPT_DIR=$(realpath $(dirname $0))
-BUILD_DIR=${SCRIPT_DIR}/build
+source ${SCRIPT_DIR}/variables.sh
 
 # function to make the build directory if it doesn't exist
 make_build_dir() {
@@ -13,5 +13,5 @@ fi
 
 # Make and build the project
 make_build_dir
-cmake -B ${BUILD_DIR} ${SCRIPT_DIR}
+cmake -B ${BUILD_DIR} ${PROJECT_DIR}
 cmake --build ${BUILD_DIR}
