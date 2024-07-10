@@ -196,7 +196,7 @@ struct DecisionNode
   /**
    * @brief N x 1 matrix where N is the number of states
    */
-  Eigen::Matrix<double, N, 1> States;
+  Eigen::Matrix<Type, N, 1> States;
 
   /**
    * @brief Opted out for a weak_ptr to ensure for a more memory safe application
@@ -238,7 +238,7 @@ struct RandomNode
   /**
    * @brief The benefit from going to this node
    */
-  double Reward;
+  double Total_reward;
 
   /**
    * @brief Easily accesible number of actions
@@ -248,7 +248,7 @@ struct RandomNode
   /**
    * @brief N x 1 matrix where N is the number of actions
    */
-  Eigen::Matrix<double, M, 1> Actions;
+  Eigen::Matrix<Type, M, 1> Actions;
 
   /**
    * @brief Opted out for a weak_ptr to ensure for a more memory safe application
