@@ -45,7 +45,7 @@ public:
    * TODO: reference is nice because we will not have to do null checking
    * @return Chosen Random Node with a specific action taken
    */
-  Mcts_defs::RandomNode<N, M, Type> Select(Mcts_defs::DecisionNode<N, M, Type>& node)
+  Mcts_defs::RandomNode<N, M, Type> Select(const Mcts_defs::DecisionNode<N, M, Type>& node)
   {
     return select(node);
   }
@@ -85,7 +85,8 @@ private:
    * TODO: reference is nice because we will not have to do null checking
    * @return Chosen Random Node with a specific action taken
    */
-  virtual Mcts_defs::RandomNode<N, M, Type> select(Mcts_defs::DecisionNode<N, M, Type>& node) = 0;
+  virtual Mcts_defs::RandomNode<N, M, Type>
+  select(const Mcts_defs::DecisionNode<N, M, Type>& node) = 0;
 
   /**
    * @brief TODO:

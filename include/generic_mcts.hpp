@@ -9,15 +9,30 @@ class Generic_MCTS : public MCTS_base<N, M, Type>
 {
 public:
   /**
+   * @brief Constructor
+   * @param K TODO:
+   */
+  Generic_MCTS(const Type k)
+  {
+    m_k = k;
+  };
+
+  /**
    * @brief Destructor
    */
   ~Generic_MCTS() override = default;
 
 private:
   /**
+   * @brief Exploration parameter for the upper confidence bound applied to Trees 
+   * TODO: rename variable and better description maybe?
+   */
+  Type m_k;
+
+  /**
    * @brief TODO:
    */
-  Mcts_defs::RandomNode<N, M, Type> select(Mcts_defs::DecisionNode<N, M, Type>& node) override
+  Mcts_defs::RandomNode<N, M, Type> select(const Mcts_defs::DecisionNode<N, M, Type>& node) override
   {
     Type max_reward = 0;
     size_t max_reward_i = 0;
@@ -25,11 +40,17 @@ private:
     {
       if (node.Children[i]->Visits > 0)
       {
-        Type equation = node.Children[i]->Total_reward;
-        std::max(max_reward, equation);
+        Type equation = (node.Children[i]->Total_reward / node.Children[i]->Visits) +
+                        (m_k * std::sqrt(std::log(node.Visits) / node.Children[i]->Visits));
+        if (equation > max_reward)
+        {
+          max_reward = equation;
+          max_reward_i = i;
+        }
       }
     };
-    return Mcts_defs::RandomNode<N, M, Type>();
+
+    return *node.Children[max_reward_i];
   };
 
   /**
