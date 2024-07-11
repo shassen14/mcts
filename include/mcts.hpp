@@ -11,7 +11,7 @@
  * Might need to change to eigen dynamic matrices because these requirements would
  * be given during runtime and not compile time
  */
-template <int N, int M, class Type = double>
+template <class Type = double>
 class MCTS_base
 {
 public:
@@ -45,7 +45,8 @@ public:
    * TODO: reference is nice because we will not have to do null checking
    * @return Chosen Random Node with a specific action taken
    */
-  Mcts_defs::RandomNode<N, M, Type> Select(const Mcts_defs::DecisionNode<N, M, Type>& node)
+  // size_t Select(const Mcts_defs::DecisionNode<Type>& node)
+  Mcts_defs::RandomNode<Type>& Select(const Mcts_defs::DecisionNode<Type>& node)
   {
     return select(node);
   }
@@ -85,8 +86,9 @@ private:
    * TODO: reference is nice because we will not have to do null checking
    * @return Chosen Random Node with a specific action taken
    */
-  virtual Mcts_defs::RandomNode<N, M, Type>
-  select(const Mcts_defs::DecisionNode<N, M, Type>& node) = 0;
+  virtual Mcts_defs::RandomNode<Type>& select(const Mcts_defs::DecisionNode<Type>& node) = 0;
+
+  // virtual Mcts_defs::RandomNode<Type> select(const Mcts_defs::DecisionNode<Type>& node) = 0;
 
   /**
    * @brief TODO:

@@ -4,8 +4,8 @@
 #include <mcts.hpp>
 #include <mcts_defs.hpp>
 
-template <int N, int M, class Type = double>
-class Generic_MCTS : public MCTS_base<N, M, Type>
+template <class Type = double>
+class Generic_MCTS : public MCTS_base<Type>
 {
 public:
   /**
@@ -30,27 +30,41 @@ private:
   Type m_k;
 
   /**
-   * @brief TODO:
+   * @brief Selects an action (Random Node) TODO:
+   * @details TODO: Assumption is that there will always be an answer by the end of it.
+   * This could possibly be a huge mistake. I might want to create an optional? what happens
+   * if there is no children and need to add one? If null throw an error?
+   * @param node Decision Node which holds the states and action children
+   * @returns A reference to the Random Node where we would like to explore
    */
-  Mcts_defs::RandomNode<N, M, Type> select(const Mcts_defs::DecisionNode<N, M, Type>& node) override
+  Mcts_defs::RandomNode<Type>& select(const Mcts_defs::DecisionNode<Type>& node) override
   {
+    // Initialize temporary variables to keep track of the child which yields
+    // max rewars
     Type max_reward = 0;
-    size_t max_reward_i = 0;
-    for (size_t i = 0; i < node.Children.size(); ++i)
+    Mcts_defs::RandomNode<Type>* output = nullptr;
+
+    // Iterate through each child and choose the one with maximum reward to explore
+    for (const auto& child : node.Children)
     {
-      if (node.Children[i]->Visits > 0)
+      if (child->Visits > 0)
       {
-        Type equation = (node.Children[i]->Total_reward / node.Children[i]->Visits) +
-                        (m_k * std::sqrt(std::log(node.Visits) / node.Children[i]->Visits));
+        Type equation = (child->Total_reward / child->Visits) +
+                        (m_k * std::sqrt(std::log(node.Visits) / child->Visits));
         if (equation > max_reward)
         {
           max_reward = equation;
-          max_reward_i = i;
+          output = child.get();
         }
+      }
+      else
+      {
+        output = child.get();
+        break;
       }
     };
 
-    return *node.Children[max_reward_i];
+    return *output;
   };
 
   /**

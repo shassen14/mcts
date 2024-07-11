@@ -18,8 +18,13 @@ namespace Mcts_defs
 
 // Forward declaration, this is for the circular dependency between
 // Decision Nodes and Random Nodes
-template <int N, int M, class Type = double>
+template <class Type = double>
 struct RandomNode;
+
+// template <int N, int M, class Type = double>
+// struct DecisionNode;
+
+// using index_and_random = std::pair<size_t, RandomNode>
 
 /**
  * @brief Node TODO:
@@ -28,13 +33,17 @@ struct RandomNode;
  * @tparam Type Type of integral variable
  * TODO: add noise or randomness?
  */
-template <int N, int M, class Type = double>
+template <class Type = double>
 struct DecisionNode
 {
   /**
    * @brief Constructor
    */
-  DecisionNode(RandomNode<N, M, Type>* parent = nullptr) : Parent(parent){};
+  DecisionNode(const int num_states, RandomNode<Type>* parent = nullptr)
+      : Visits(0), Reward(0), Num_states(num_states), Parent(parent)
+  {
+    States.setZero(num_states);
+  };
 
   /**
    * @brief Destructor
@@ -54,26 +63,26 @@ struct DecisionNode
   /**
    * @brief Easily accesible number of states
    */
-  int Num_states = N;
+  int Num_states;
 
   /**
    * @brief N x 1 matrix where N is the number of states
    */
-  Eigen::Matrix<Type, N, 1> States;
+  Eigen::Matrix<Type, Eigen::Dynamic, 1> States;
 
   /**
    * @brief Raw pointer pointing at the parent
    * @details Design choice for a raw pointer because ownership and creating
    * these nodes beforehand to connect them together is cumbersome
    */
-  RandomNode<N, M, Type>* Parent;
+  RandomNode<Type>* Parent;
 
   /**
    * @brief Vector of raw pointers to children
    * @details Design choice for a raw pointer because ownership and creating
-   * these nodes beforehand to connect them together is cumbersome
+   * these nodes beforehand to connect them together is cumbersome TODO:
    */
-  std::vector<RandomNode<N, M, Type>*> Children;
+  std::vector<std::unique_ptr<RandomNode<Type>>> Children;
 };
 
 /**
@@ -82,13 +91,17 @@ struct DecisionNode
  * @tparam M Number of actions
  * @tparam Type Type of integral variable
  */
-template <int N, int M, class Type>
+template <class Type>
 struct RandomNode
 {
   /**
    * @brief Constructor
    */
-  RandomNode(DecisionNode<N, M, Type>* parent = nullptr) : Parent(parent){};
+  RandomNode(const int num_actions, DecisionNode<Type>* parent = nullptr)
+      : Visits(0), Total_reward(0), Num_actions(num_actions), Parent(parent)
+  {
+    Actions.setZero(num_actions);
+  };
 
   /**
    * @brief Destructor
@@ -108,28 +121,27 @@ struct RandomNode
   /**
    * @brief Easily accesible number of actions
    */
-  int Num_actions = M;
+  int Num_actions;
 
   /**
    * @brief N x 1 matrix where N is the number of actions
    */
-  Eigen::Matrix<Type, M, 1> Actions;
+  Eigen::Matrix<Type, Eigen::Dynamic, 1> Actions;
 
   /**
    * @brief Raw pointer pointing at the parent
    * @details Design choice for a raw pointer because ownership and creating
    * these nodes beforehand to connect them together is cumbersome
    */
-  DecisionNode<N, M, Type>* Parent;
+  DecisionNode<Type>* Parent;
 
   /**
    * @brief Vector of raw pointers to children
    * @details Design choice for a raw pointer because ownership and creating
-   * these nodes beforehand to connect them together is cumbersome
+   * these nodes beforehand to connect them together is cumbersome TODO:
    */
-  std::vector<DecisionNode<N, M, Type>*> Children;
+  std::vector<std::unique_ptr<DecisionNode<Type>>> Children;
 };
-
 } // namespace Mcts_defs
 
 #endif

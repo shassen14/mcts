@@ -12,12 +12,17 @@ TEST(MCTSDefs, DecisionNode)
   const int states = 8;
   const int actions = 2;
   const int total_children = 10;
-  Mcts_defs::DecisionNode<states, actions> root;
+  Mcts_defs::DecisionNode<> root(states);
 
   for (int i = 0; i < total_children; ++i)
   {
-    Mcts_defs::RandomNode<states, actions> child(&root);
-    root.Children.push_back(&child);
+    // Moving the ownership to root for the pointer object
+    auto child = std::make_unique<Mcts_defs::RandomNode<>>(actions, &root);
+    root.Children.push_back(std::move(child));
+
+    // TODO: Delete. Old way
+    // Mcts_defs::RandomNode<> child(actions, &root);
+    // root.Children.push_back(&child);
   }
 
   // iterate through to check if we can vary the states and actions
@@ -45,15 +50,18 @@ TEST(MCTSDefs, ActionNode)
   const int states = 8;
   const int actions = 2;
   const int total_children = 1;
-  Mcts_defs::RandomNode<states, actions> root;
+  Mcts_defs::RandomNode<> root(actions);
 
   for (int i = 0; i < total_children; ++i)
   {
-    Mcts_defs::DecisionNode<states, actions> child(&root);
-    root.Children.push_back(&child);
-    // // std::unique_ptr<Mcts_defs::Node_t<states, actions>>
-    // auto child = std::make_unique<Mcts_defs::DecisionNode<states, actions>>(&root);
-    // root.Children.push_back(std::move(child));
+    // Moving the ownership to root for the pointer object
+
+    auto child = std::make_unique<Mcts_defs::DecisionNode<>>(states, &root);
+    root.Children.push_back(std::move(child));
+
+    // TODO: Delete. Old way
+    // Mcts_defs::DecisionNode<> child(states, &root);
+    // root.Children.push_back(&child);
   }
 
   // iterate through to check if we can vary the states and actions
