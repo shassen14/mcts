@@ -11,6 +11,10 @@
 
 namespace Mcts_defs
 {
+
+template <class Type>
+using VectorTD = Eigen::Matrix<Type, Eigen::Dynamic, 1>;
+
 /**
  * @brief using this documentation for implementation now
  * @details https://theses.hal.science/tel-00927252/document
@@ -68,7 +72,7 @@ struct DecisionNode
   /**
    * @brief N x 1 matrix where N is the number of states
    */
-  Eigen::Matrix<Type, Eigen::Dynamic, 1> States;
+  VectorTD<Type> States;
 
   /**
    * @brief Raw pointer pointing at the parent
@@ -126,7 +130,7 @@ struct RandomNode
   /**
    * @brief N x 1 matrix where N is the number of actions
    */
-  Eigen::Matrix<Type, Eigen::Dynamic, 1> Actions;
+  VectorTD<Type> Actions;
 
   /**
    * @brief Raw pointer pointing at the parent
@@ -142,6 +146,39 @@ struct RandomNode
    */
   std::vector<std::unique_ptr<DecisionNode<Type>>> Children;
 };
+
+/**
+ * @brief 
+ * @details 
+ * @tparam Type
+ * @param node
+ * 
+ */
+template <class Type>
+std::vector<VectorTD<Type>, Eigen::aligned_allocator<VectorTD<Type>>>
+Action_sampler(const VectorTD<Type>& previous_action,
+               const VectorTD<Type>& lower_bounds,
+               const VectorTD<Type>& upper_bounds,
+               const VectorTD<Type>& rate_limits)
+{
+  std::vector<VectorTD<Type>, Eigen::aligned_allocator<VectorTD<Type>>> output;
+
+  return output;
+};
+
+// template <class D1>
+// Eigen::Matrix<typename D1::Scalar, D1::RowsAtCompileTime, 1>
+// // std::vector<Eigen::Matrix<typename D1::Scalar, D1::RowsAtCompileTime, 1>>
+// Action_sampler(const Eigen::MatrixBase<D1>& node,
+//                const Eigen::MatrixBase<D1>& lower_limits,
+//                const Eigen::MatrixBase<D1>& upper_limits)
+// {
+//   Eigen::MatrixBase<D1> output;
+
+//   // std::vector<Eigen::MatrixBase<D1>, Eigen::aligned_allocator<Eigen::MatrixBase<D1>>> output;
+//   return output;
+// };
+
 } // namespace Mcts_defs
 
 #endif

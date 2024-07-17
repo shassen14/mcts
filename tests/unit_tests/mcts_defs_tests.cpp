@@ -80,3 +80,16 @@ TEST(MCTSDefs, ActionNode)
 }
 
 ///////////////////////////////////////////////////////////////////////////////
+
+TEST(MCTSDefs, ActionSampler)
+{
+  Eigen::Matrix<double, Eigen::Dynamic, 1> actions{{1}, {2}, {3}};
+  Eigen::Matrix<double, Eigen::Dynamic, 1> lower_bounds{{-10}, {-5}, {-8}};
+  Eigen::Matrix<double, Eigen::Dynamic, 1> upper_bounds{{4}, {30}, {10}};
+
+  auto answer = Mcts_defs::Action_sampler(actions, lower_bounds, upper_bounds);
+
+  EXPECT_TRUE(answer.empty());
+}
+
+///////////////////////////////////////////////////////////////////////////////

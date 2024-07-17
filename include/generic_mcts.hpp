@@ -33,14 +33,15 @@ private:
    * @brief Selects an action (Random Node) TODO:
    * @details TODO: Assumption is that there will always be an answer by the end of it.
    * This could possibly be a huge mistake. I might want to create an optional? what happens
-   * if there is no children and need to add one? If null throw an error?
+   * if there is no children and need to add one? If null throw an error? maybe explore possible
+   * actions to utilize and add a random node?
    * @param node Decision Node which holds the states and action children
    * @returns A reference to the Random Node where we would like to explore
    */
   Mcts_defs::RandomNode<Type>& select(const Mcts_defs::DecisionNode<Type>& node) override
   {
     // Initialize temporary variables to keep track of the child which yields
-    // max rewars
+    // max reward
     Type max_reward = 0;
     Mcts_defs::RandomNode<Type>* output = nullptr;
 
@@ -70,12 +71,12 @@ private:
   /**
    * @brief TODO:
    */
-  void grow_tree() override{};
+  void evaluate() override{};
 
   /**
    * @brief TODO:
    */
-  void evaluate() override{};
+  void grow_tree() override{};
 
   /**
    * @brief TODO:

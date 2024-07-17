@@ -45,7 +45,6 @@ public:
    * TODO: reference is nice because we will not have to do null checking
    * @return Chosen Random Node with a specific action taken
    */
-  // size_t Select(const Mcts_defs::DecisionNode<Type>& node)
   Mcts_defs::RandomNode<Type>& Select(const Mcts_defs::DecisionNode<Type>& node)
   {
     return select(node);
@@ -87,8 +86,6 @@ private:
    * @return Chosen Random Node with a specific action taken
    */
   virtual Mcts_defs::RandomNode<Type>& select(const Mcts_defs::DecisionNode<Type>& node) = 0;
-
-  // virtual Mcts_defs::RandomNode<Type> select(const Mcts_defs::DecisionNode<Type>& node) = 0;
 
   /**
    * @brief TODO:
